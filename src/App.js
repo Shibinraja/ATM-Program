@@ -16,13 +16,13 @@ class App extends React.Component {
   login = (email,password) => {
     console.log(email, password);
     this.setState({ view: "home"})
-    axios.post(`http://localhost:6060/login` , {email , password})
+    axios.post("http://localhost:6060/login" , {email , password})
       .then(res =>{
         console.log(res);
-        if(res.data.code ==200){
+        if(res.status == 200){
           console.log("Login successfull")
         }
-        else if (res.data.code ==204){
+        else if (res.status ==204){
           console.log("Username password do not match")
         }
         else{

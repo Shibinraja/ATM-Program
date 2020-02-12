@@ -29,17 +29,19 @@ app.post('/login', (req, res) =>{
         if (err) throw err;
 
         var db = client.db("Task");
+        var userName = {Name:req.body.name};
+        var userPass = {Password:req.body.password};
 
         
 
-        var cursor = db.collection("atm_program").find().toArray();
-
-
+        var cursor = db.collection("atm_program").find({Name:req.body.name}).toArray();
 
         cursor.then((data) => {
 
-            // console.log(res.json(data));
-            console.log(req.data)
+            console.log(res.data)
+            if(userPass.Password == data.password){
+                res.json({Message: "Success"})
+            }
 
         })
  
