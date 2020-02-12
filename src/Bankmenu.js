@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import {Button , Form , Card} from 'react-bootstrap';
-import {Link, BrowserRouter, Route , withRouter} from 'react-router-dom';
 import Deposit from './Deposit';
 
 class Bankmenu extends Component {
+
+    state = {
+        deposit:false,
+        withdraw:false,
+        balance:false,
+    }
+
+    deposit = () => {
+
+        this.setState({deposit: true})
+        this.props.setdeposit(this.state.deposit)
+    }
+
+    withdraw = () => {
+        this.setState({withdraw: true})
+        this.props.setwithdraw(this.state.withdraw)
+    }
+
+    balance = () => {
+        this.setState({withdraw: true})
+        this.props.setbalance(this.state.balance)
+    }
 
     styles = () =>{
             return{
@@ -16,12 +37,6 @@ class Bankmenu extends Component {
 
     }
 
-    handleClick = (e) =>{
-        
-        e.preventDefault();
-        window.location = <Deposit/>;
-
-    }
 
     render() {
         return (
@@ -32,18 +47,19 @@ class Bankmenu extends Component {
                     <Card.Body>
                         <Card.Title style= {{fontSize:"25px"}} className="font-weight-bold">Bank Menu</Card.Title>
                         <br></br>
-                        <Button variant = "info" size="lg" active>
+                        <Button onClick ={this.balance} setBalance={this.props.setbalance} variant = "info" size="lg" active>
                             Check Balance
                         </Button>
                         <br></br><br></br>
                       
-                        
-                        <Button onClick= {this.handleClick} variant = "info" size="lg" active>
+                        <Button onClick ={this.deposit} setDeposit={this.props.setdeposit} variant = "info" size="lg" active>
                             Deposit
                         </Button>
                         
+                        
+                        
                         <br></br><br></br>
-                        <Button variant = "info" size="lg" active>
+                        <Button onClick ={this.withdraw} setWithdraw = {this.props.setwithdraw} variant = "info" size="lg" active>
                             Withdraw
                         </Button>
                         <br></br><br></br><br></br>

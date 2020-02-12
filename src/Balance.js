@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {Button , Form , Card} from 'react-bootstrap';
 
-class Deposit extends Component {
+class Balance extends Component {
 
+    
     state = {
         home:0
    }
 
    home = () => {
        this.setState({home:1}) 
-       this.props.withHome(this.state.home)
+       this.props.balHome(this.state.home)
    }
 
     styles = () =>{
@@ -30,16 +31,11 @@ class Deposit extends Component {
                     <Card border="secondary" style={{width: "30rem"}}>
                     <Card.Header className="font-weight-bold">Bank</Card.Header>
                     <Card.Body>
-                        <Card.Title style= {{fontSize:"5x"}} className="font-weight-bold">Withdraw</Card.Title>  
+                        <Card.Title style= {{fontSize:"5x"}} className="font-weight-bold">Balance Check</Card.Title>  
                         <br></br>
-                        <Card.Text >Amount</Card.Text> 
-                        <Form>
-                            <Form.Control type="number" placeholder="Enter the Amount"/>
-                            <br></br>
-                            <Button variant="outline-primary">Enter</Button>
+                        <Card.Text >Your Balance Amount is : Amount</Card.Text> 
                             <br></br><br></br>
-                            <Button onClick={this.home} withHome = {this.props.withHome} variant="dark">Home</Button>
-                        </Form>
+                            <Button onClick={this.home} balHome = {this.props.balHome} variant="dark">Home</Button>
                     </Card.Body>
                     </Card>
             </div>
@@ -47,4 +43,4 @@ class Deposit extends Component {
     }
 }
 
-export default Deposit
+export default Balance
