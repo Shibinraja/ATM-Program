@@ -4,20 +4,16 @@ import {Button , Form , Card} from 'react-bootstrap';
 class Deposit extends Component {
 
     state = {
-        home:0,
         amount:0
     }
     
-
     home = () => {
-        this.setState({home:1})
-        this.props.depHome(this.state.home)
+        this.props.depHome()
     }
 
     values = () => {
-        console.log(this.state.amount)
+        this.props.setdeposit(this.state.amount)
     }
-
 
 
     styles = () =>{
@@ -41,11 +37,11 @@ class Deposit extends Component {
                         <br></br>
                         <Card.Text >Amount</Card.Text> 
                         <Form>
-                            <Form.Control onChange={(e)=>{this.setState({amount:e.target.value})}} value ={this.state.amount} type="number" placeholder="Enter the Amount in Rs"/>
+                            <Form.Control  onChange={(e)=>{this.setState({amount:e.target.value})}} value ={this.state.amount} type="number" placeholder="Enter the Amount in Rs"/>
                             <br></br>
-                            <Button onClick={this.values} variant="outline-primary">Enter</Button>
+                            <Button onClick={this.values}  variant="outline-primary">Enter</Button>
                             <br></br><br></br>
-                            <Button onClick={this.home} depHome = {this.props.depHome} variant="dark">Home</Button>
+                            <Button onClick={this.home} variant="dark">Home</Button>
                         </Form>
                     </Card.Body>
                     </Card>

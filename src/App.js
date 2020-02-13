@@ -10,19 +10,22 @@ import axios from 'axios';
 class App extends React.Component {
   state = {
     view : "login",
+    currentname : "",
+    currentpassword : "",
+    balance:""
   }
 
   
-  login = (email,password) => {
-    console.log(email, password);
-    this.setState({ view: "home"})
-    axios.post("http://localhost:6060/login" , {email , password})
-      .then(res =>{
-        console.log(res);
-        if(res.status == 200){
-          console.log("Login successfull")
+  login = (name,password) => {
+    // console.log(name, password);
+    axios.post("http://localhost:6060/login" , {name,password})
+    .then(res =>{
+      console.log(res);
+      if(res.status === 200){
+        console.log("Login successfull")
+        this.setState({ view: "home", currentname:name , currentpassword:password})
         }
-        else if (res.status ==204){
+        else if (res.status === 403){
           console.log("Username password do not match")
         }
         else{
@@ -32,7 +35,11 @@ class App extends React.Component {
       })
   }
 
-  moneydeposit =()=>{
+  moneydeposit =(amount)=>{
+    axios.post("http://localhost:6060/Deposit ", {name:this.state.currentname,amount} )
+    .then(res =>{
+      console.log(res);
+    })
     this.setState({view: "deposit"})
   }
 
@@ -41,7 +48,12 @@ class App extends React.Component {
   }
 
   moneybalance = () => {
-    this.setState({view: "Balance"})
+    
+    axios.post("http://localhost:6060/Balance",{name:this.state.currentname})
+    .then(res => {
+      // console.log(res)
+      this.setState({view: "Balance" , balance:res.data});
+    })
   }
 
   dephome = () => {
@@ -62,16 +74,16 @@ class App extends React.Component {
       return <Login setLogin = {this.login}/>
     }
     else if(this.state.view === "home"){
-      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance}/> 
+      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance} /> 
     }
     else if(this.state.view === "deposit"){
-      return <Deposit depHome={this.dephome}/>
+      return <Deposit depHome={this.dephome} setdeposit = {this.moneydeposit}/>
     }
     else if(this.state.view ==="withdraw"){
       return <Withdraw withHome={this.withhome}/>
     }
     else if(this.state.view === "Balance"){
-      return <Balance balHome ={this.balhome}/>
+      return <Balance balHome ={this.balhome} balance = {this.state.balance}/>
     }
   }
 

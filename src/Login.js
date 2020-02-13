@@ -4,17 +4,18 @@ import {Button , Form } from 'react-bootstrap';
 class Login extends Component {
 
     state = {
-        email:"",
+        name:"",
         password:""
     }
 
     logininfo=(e)=>{
         e.preventDefault();
-        this.props.setLogin(this.state.email, this.state.password)
+        this.props.setLogin(this.state.name, this.state.password)
+        
     };
 
     userChange=(event)=>{
-        this.setState({email:event.target.value});
+        this.setState({name:event.target.value});
     };
 
     passChange=(event)=>{
@@ -29,7 +30,7 @@ class Login extends Component {
                 <h2 className="text-center">Login</h2>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
-                    <Form.Control onChange={this.userChange} value={this.state.email} type = "text" placeholder="UserName"/>
+                    <Form.Control onChange={this.userChange} value={this.state.name} type = "text" placeholder="UserName"/>
                 </Form.Group>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>

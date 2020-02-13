@@ -4,12 +4,11 @@ import {Button , Form , Card} from 'react-bootstrap';
 class Deposit extends Component {
 
     state = {
-        home:0
+        
    }
 
    home = () => {
-       this.setState({home:1}) 
-       this.props.withHome(this.state.home)
+       this.props.withHome()
    }
 
     styles = () =>{
@@ -38,7 +37,7 @@ class Deposit extends Component {
                             <br></br>
                             <Button variant="outline-primary">Enter</Button>
                             <br></br><br></br>
-                            <Button onClick={this.home} withHome = {this.props.withHome} variant="dark">Home</Button>
+                            <Button onClick={this.home} variant="dark">Home</Button>
                         </Form>
                     </Card.Body>
                     </Card>
