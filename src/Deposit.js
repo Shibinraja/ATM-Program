@@ -12,13 +12,13 @@ class Deposit extends Component {
     }
 
     values = () => {
-        this.props.setdeposit(this.state.amount)
+        this.props.moneydeposit(this.state.amount)
     }
 
 
     styles = () =>{
         return{
-            padding:"150px",
+            padding:"500px",
             paddingTop:"75px",
             textAlign:"center",
 

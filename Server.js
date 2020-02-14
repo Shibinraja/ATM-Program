@@ -83,18 +83,19 @@ app.post('/Deposit', (req, res) => {
         if (err) throw err;
 
         var db = client.db("Atm");
-        console.log(req.body)
 
-        var cursor = db.collection("Atm").updateOne(req.body.name, {$set:{balance:req.body.amount}},function(err,result){
+        var insert = {name:req.body.name}
+        var amount= parseInt(req.body.amount);
+        var balance = parseInt(req.body.balance);
+        let update = amount + balance
+        var newvalues = {$set:{balance:update}}
+        console.log(update)
+
+        db.collection("Atm").updateOne(insert,newvalues, function(err,result){
             if (err) throw err;
-
-            cursor.then((data) => {
     
-                // console.log(data.balance)
-                res.json(data.balance);
-        })
-
-
+                //console.log(result)
+                res.status(200)
         });
 
         client.close();
@@ -103,4 +104,31 @@ app.post('/Deposit', (req, res) => {
 
 })
 
+app.post('/Withdraw', (req, res) => {
+
+    MongoClient.connect(URL, (err, client) => {
+
+        if (err) throw err;
+
+        var db = client.db("Atm");
+
+        var insert = {name:req.body.name};
+        var amount= parseInt(req.body.withdraw);
+        var balance = parseInt(req.body.balance);
+        let update = balance - amount
+        var newvalues = {$set:{balance:update}}
+        console.log(req.body)
+
+        db.collection("Atm").updateOne(insert,newvalues, function(err,result){
+            if (err) throw err;
+    
+                //console.log(result)
+                res.status(200)
+        });
+
+        client.close();
+
+    });
+
+})
 app.listen(6060)

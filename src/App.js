@@ -12,7 +12,7 @@ class App extends React.Component {
     view : "login",
     currentname : "",
     currentpassword : "",
-    balance:""
+    balance:"",
   }
 
   
@@ -35,13 +35,27 @@ class App extends React.Component {
       })
   }
 
-  moneydeposit =(amount)=>{
-    axios.post("http://localhost:6060/Deposit ", {name:this.state.currentname,amount} )
+  moneydeposit =()=>{
+    this.setState({view: "deposit"})
+  }
+  
+  amountdeposit = (amount) =>{
+    axios.post("http://localhost:6060/Deposit ", {name:this.state.currentname , amount:amount , balance:this.state.balance})
     .then(res =>{
       console.log(res);
     })
-    this.setState({view: "deposit"})
+    this.setState({view:"home"})
   }
+
+  amountwithdraw =(cash) =>{
+    axios.post("http://localhost:6060/Withdraw ", {name:this.state.currentname , withdraw:cash , balance:this.state.balance})
+    .then(res =>{
+      console.log(res);
+    })
+    this.setState({view:"home"})
+
+  }
+
 
   moneywithdraw = () => {
     this.setState({view: "withdraw"})
@@ -66,6 +80,11 @@ class App extends React.Component {
 
   balhome = () =>{
     this.setState({view: "home"})
+    
+  }
+
+  loginfront = () =>{
+    this.setState({view: "login"})
   }
 
 
@@ -74,13 +93,13 @@ class App extends React.Component {
       return <Login setLogin = {this.login}/>
     }
     else if(this.state.view === "home"){
-      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance} /> 
+      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance} Login = {this.loginfront} /> 
     }
     else if(this.state.view === "deposit"){
-      return <Deposit depHome={this.dephome} setdeposit = {this.moneydeposit}/>
+      return <Deposit depHome={this.dephome}  moneydeposit = {this.amountdeposit}/>
     }
     else if(this.state.view ==="withdraw"){
-      return <Withdraw withHome={this.withhome}/>
+      return <Withdraw withHome={this.withhome} moneywithdraw = {this.amountwithdraw}/>
     }
     else if(this.state.view === "Balance"){
       return <Balance balHome ={this.balhome} balance = {this.state.balance}/>

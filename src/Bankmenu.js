@@ -20,7 +20,7 @@ class Bankmenu extends Component {
 
     styles = () =>{
             return{
-                padding:"150px",
+                padding:"500px",
                 paddingTop:"75px",
                 textAlign:"center",
             }
@@ -51,7 +51,7 @@ class Bankmenu extends Component {
                             Withdraw
                         </Button>
                         <br></br><br></br><br></br>
-                        <Button style={{float: 'left'}} variant="danger">Sign Out</Button>
+                        <Button onClick = {()=>{this.props.Login()}} style={{float: 'left'}} variant="danger">Sign Out</Button>
                         
                         <Button style={{float: 'right'}} variant="warning">Help</Button>
 
