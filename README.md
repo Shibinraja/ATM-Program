@@ -1,3 +1,9 @@
+Working Combination for Login page :
+
+1. Username : shibin , Password:52747
+2. Username : sidd , Password:1312098
+3. Username : shilpa , Password:2468
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
