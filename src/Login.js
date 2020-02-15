@@ -5,12 +5,13 @@ class Login extends Component {
 
     state = {
         name:"",
-        password:""
+        password:"",
+        time:60
     }
 
     logininfo=(e)=>{
         e.preventDefault();
-        this.props.setLogin(this.state.name, this.state.password)
+        this.props.setLogin(this.state.name, this.state.password , this.state.time)
         
     };
 

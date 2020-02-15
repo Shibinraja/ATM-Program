@@ -13,10 +13,11 @@ class App extends React.Component {
     currentname : "",
     currentpassword : "",
     balance:"",
+    currenttime:""
   }
 
   
-  login = (name,password) => {
+  login = (name,password,time) => {
     // console.log(name, password);
     axios.post("http://localhost:6060/login" , {name,password})
     .then(res =>{
@@ -33,6 +34,15 @@ class App extends React.Component {
         }
         
       })
+
+      setInterval(()=>{
+        if (time===0){
+          document.location.reload(true);
+            
+        }else{
+          this.setState({currenttime: time--})
+        }
+      },1000)
   }
 
   moneydeposit =()=>{
@@ -93,7 +103,7 @@ class App extends React.Component {
       return <Login setLogin = {this.login}/>
     }
     else if(this.state.view === "home"){
-      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance} Login = {this.loginfront} /> 
+      return <Bankmenu setdeposit = {this.moneydeposit} setwithdraw = {this.moneywithdraw} setbalance = {this.moneybalance} Login = {this.loginfront} name = {this.state.currentname} time = {this.state.currenttime}/> 
     }
     else if(this.state.view === "deposit"){
       return <Deposit depHome={this.dephome}  moneydeposit = {this.amountdeposit}/>

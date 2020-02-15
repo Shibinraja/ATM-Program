@@ -34,8 +34,12 @@ class Bankmenu extends Component {
 
 <                   Card border="secondary" style={{width: "30rem"}}>
                     <Card.Header className="font-weight-bold">Bank</Card.Header>
+                    <br></br>
+                    <p style = {{textAlign:"left"}}>Hello,<b>{this.props.name}</b></p>
+                    <p style = {{textAlign:"right" , marginRight:"5px" , marginTop:"-40px"}}>Time Left:<b>{this.props.time}</b></p>
+
                     <Card.Body>
-                        <Card.Title style= {{fontSize:"25px"}} className="font-weight-bold">Bank Menu</Card.Title>
+                        <Card.Title style= {{fontSize:"25px", textAlign:"center"}} className="font-weight-bold">Bank Menu</Card.Title>
                         <br></br>
                         <Button onClick ={this.balance} variant = "info" size="lg" active>
                             Check Balance
