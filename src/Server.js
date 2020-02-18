@@ -28,59 +28,107 @@ app.post('/login', (req, res) =>{
 
         if (err) throw err;
 
-        var db = client.db("Task");
-        var userName = {Name:req.body.name};
-        var userPass = {Password:req.body.password};
+        const db = client.db("Atm");
+        let userName = req.body.name;
+        let userPass = req.body.password;
 
-        
+        console.log(req.body)
 
-        var cursor = db.collection("atm_program").find({Name:req.body.name}).toArray();
-
-        cursor.then((data) => {
-
-            console.log(res.data)
-            if(userPass.Password == data.password){
-                res.json({Message: "Success"})
-            }
-
-        })
- 
-
-
-        client.close()
+        var dbresult = db.collection("Atm").findOne({ name: userName });
+            dbresult.then((data)=>{
+                // console.log(data);
+                if(userPass == data.password){
+                    res.json({Message: "Success"})
+                } else{
+                    res.status(403).json({
+                        Message: "Failure"
+                    });
+                }
+            })
+    
+            client.close()
 
     });
 
 });
 
-// app.get('/Details', (req, res) => {
+app.post('/Balance', (req, res) => {
 
-//     MongoClient.connect(URL, (err, client) => {
+    MongoClient.connect(URL, (err, client) => {
 
-//         if (err) throw err;
+        if (err) throw err;
 
+        var db = client.db("Atm");
+        console.log(req.body)
+
+        var cursor = db.collection("Atm").findOne(req.body)
+
+        cursor.then((data) => {
+
+            // console.log(data.balance)
+            res.json(data.balance);
+
+        });
+
+        client.close();
+
+    });
+
+})
+
+app.post('/Deposit', (req, res) => {
+
+    MongoClient.connect(URL, (err, client) => {
+
+        if (err) throw err;
+
+        var db = client.db("Atm");
+
+        var insert = {name:req.body.name}
+        var amount= parseInt(req.body.amount);
+        var balance = parseInt(req.body.balance);
+        let update = amount + balance
+        var newvalues = {$set:{balance:update}}
+        console.log(update)
+
+        db.collection("Atm").updateOne(insert,newvalues, function(err,result){
+            if (err) throw err;
     
+                //console.log(result)
+                res.status(200)
+        });
 
-//         var db = client.db("Task");
+        client.close();
 
+    });
 
+})
 
-//         var cursor = db.collection("atm_program").find().toArray();
+app.post('/Withdraw', (req, res) => {
 
+    MongoClient.connect(URL, (err, client) => {
 
+        if (err) throw err;
 
-//         cursor.then((data) => {
+        var db = client.db("Atm");
 
-//             res.json(data);
+        var insert = {name:req.body.name};
+        var amount= parseInt(req.body.withdraw);
+        var balance = parseInt(req.body.balance);
+        let update = balance - amount
+        var newvalues = {$set:{balance:update}}
+        console.log(req.body)
 
-//         })
+        db.collection("Atm").updateOne(insert,newvalues, function(err,result){
+            if (err) throw err;
+    
+                //console.log(result)
+                res.status(200)
+        });
 
+        client.close();
 
+    });
 
-//         client.close();
-
-//     })
-
-// })
-
+})
 app.listen(6060)
